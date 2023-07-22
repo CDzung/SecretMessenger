@@ -1,4 +1,5 @@
 ﻿using Firebase.Auth;
+using Firebase.Auth.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,12 @@ namespace SecretMessage
     public partial class ChatPage : Window
     {
 
-        public ChatPage(User user)
+        public ChatPage()
         {
             InitializeComponent();
-            lbUsername.Content = user.Info.DisplayName;
-            avatar.ImageSource = new BitmapImage(new Uri(user.Info.PhotoUrl));
+            var currentUser = FirebaseUI.Instance.Client.User;
+            lbUsername.Content = currentUser.Info.DisplayName;
+            avatar.ImageSource = new BitmapImage(new Uri(currentUser.Info.PhotoUrl));
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

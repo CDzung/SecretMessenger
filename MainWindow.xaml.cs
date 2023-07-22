@@ -64,7 +64,7 @@ namespace SecretMessage
                     }
 
 
-                    ChatPage chatPage = new ChatPage(e.User);
+                    ChatPage chatPage = new ChatPage();
                     chatPage.Show();
                     this.Close();
                 }

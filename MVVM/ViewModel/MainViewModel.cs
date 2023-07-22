@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using Firebase.Auth.UI;
 
 namespace SecretMessage.MVVM.ViewModel
 {
@@ -50,6 +51,9 @@ namespace SecretMessage.MVVM.ViewModel
             BindingOperations.EnableCollectionSynchronization(Contacts, _syncLock);
             BindingOperations.EnableCollectionSynchronization(Messages, _syncLock);
 
+
+            var currentUser = FirebaseUI.Instance.Client.User;
+
             var firebase = new FirebaseClient("https://secret-message-6a1d7-default-rtdb.firebaseio.com/");
             var users = firebase
             .Child("users")
@@ -57,38 +61,41 @@ namespace SecretMessage.MVVM.ViewModel
             
             users.Subscribe(d =>
             {
-                if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
-                {
-                    var user = d.Object;
-                    var contact = Contacts.FirstOrDefault(c => c.UID == user.Uid);
-                    if (contact == null)
-                    {
-                        Contacts.Add(new ContactModel
-                        {
-                            UID = user.Uid,
-                            Username = user.DisplayName,
-                            ImageSource = user.PhotoUrl,
-                            Messages = new ObservableCollection<MessageModel>()
-                        });
-                    } 
-                    else
-                    {
-                        contact.Username = user.DisplayName;
-                        contact.ImageSource = user.PhotoUrl;
-                        contact.UID = user.Uid;
-                        contact.Messages = new ObservableCollection<MessageModel>();
+                var user = d.Object;
 
-                    }
-                } 
-                else if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.Delete)
+                if(!user.Uid.Equals(currentUser.Uid))
                 {
-                    var user = d.Object;
                     var contact = Contacts.FirstOrDefault(c => c.UID == user.Uid);
-                    if(contact is not null)
+                    if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
                     {
-                        Contacts.Remove(contact);
+                        if (contact == null)
+                        {
+                            Contacts.Add(new ContactModel
+                            {
+                                UID = user.Uid,
+                                Username = user.DisplayName,
+                                ImageSource = user.PhotoUrl,
+                                Messages = new ObservableCollection<MessageModel>()
+                            });
+                        }
+                        else
+                        {
+                            contact.Username = user.DisplayName;
+                            contact.ImageSource = user.PhotoUrl;
+                            contact.UID = user.Uid;
+                            contact.Messages = new ObservableCollection<MessageModel>();
+
+                        }
+                    }
+                    else if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.Delete)
+                    {
+                        if (contact is not null)
+                        {
+                            Contacts.Remove(contact);
+                        }
                     }
                 }
+                
             });
 
             SendCommand = new RelayCommand(o => 
