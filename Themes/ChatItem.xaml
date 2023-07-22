@@ -11,27 +11,26 @@
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="0, 8, 0, 0">
                             <Label Content="{Binding Username}"
                                    Foreground="{Binding UsernameColor}"
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"
-                                   Margin="0,0,0,0"/>
+                                   Margin="3,0,0,0"/>
                             <Label Content="{Binding Time}"
-                                   Foreground="#44474D"
+                                   Foreground="#B8B8B8"
                                    FontWeight="SemiBold"
                                    FontSize="8"
+                                   Margin="3,0,0,0"
                                    VerticalAlignment="Center"/>
-
                         </StackPanel>
-                        <Label Content="{Binding Message}"
+                            <Label Content="{Binding Message}"
                                    Foreground="White"
                                    FontWeight="SemiBold"
-                                   VerticalAlignment="Center"
-                                   />
+                                   Margin="3,-8,0,0"
+                                   VerticalAlignment="Top"/>
                     </StackPanel>
-                    
-                    
+                                        
                 </StackPanel>
             </ControlTemplate>
         </Style.Resources>
