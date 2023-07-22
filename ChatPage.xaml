@@ -71,6 +71,7 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
 
+            
             <Label Content="Contact"
                    VerticalAlignment="Center"
                    FontWeight="Medium"
@@ -82,27 +83,33 @@
                       Background="Transparent"
                       BorderThickness="0"
                       Grid.Row="1"
-                      ItemContainerStyle="{StaticResource ContactCard}"
+                      ItemContainerStyle="{StaticResource ContactCard}" 
                       >
             </ListView>
-
-            <StackPanel Grid.Row="2"
+            <Button Margin="0,0,0,10" Grid.Row="2" Click="Button_Click">
+                <StackPanel
                         Orientation="Horizontal"
                         Background="#292B2F">
-                <Ellipse Width="30" Height="30">
-                    <Ellipse.Fill>
-                        <ImageBrush x:Name="avatar"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <StackPanel VerticalAlignment="Center">
-                    <Label Content="Username"
+                    <Ellipse Width="30" Height="30">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="avatar"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                   
+                    <StackPanel VerticalAlignment="Center">
+                        
+                            <Label Content="Username"
                            Foreground="White"
                            FontWeight="SemiBold"
                            Margin="0, -5, 0, -5"
                            x:Name="lbUsername"/>
+                        
+                    </StackPanel>
                 </StackPanel>
-
-            </StackPanel>
+            </Button>
+                
+           
+            
             
         </Grid>
         <Grid Grid.Column="1"

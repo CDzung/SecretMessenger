@@ -102,7 +102,7 @@ namespace SecretMessage.MVVM.ViewModel
             {
                 Messages.Add(new MessageModel
                 {
-                    Username= currentUser.Info.FirstName + " " + currentUser.Info.LastName,
+                    Username= currentUser.Info.DisplayName,
                     UsernameColor= "#C6C6C6",
                     Message =Message,
                     Time = DateTime.Now,
