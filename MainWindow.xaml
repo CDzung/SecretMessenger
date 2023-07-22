@@ -12,5 +12,7 @@
             x:Name="Frame"
             NavigationUIVisibility="Hidden"
             />
+        
     </Grid>
+
 </Window>
