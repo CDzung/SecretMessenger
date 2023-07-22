@@ -41,7 +41,7 @@ namespace SecretMessage
                 {
                     this.Frame.Navigate(new LoginPage());
                 }
-                else if ((this.Frame.Content == null || this.Frame.Content.GetType() != typeof(ProfilePage)))
+                else if ((this.Frame.Content == null || this.Frame.Content.GetType() != typeof(ChatPage)))
                 {
                     var firebase = new FirebaseClient("https://secret-message-6a1d7-default-rtdb.firebaseio.com/");
                     var users = await firebase
@@ -64,7 +64,9 @@ namespace SecretMessage
                     }
 
 
-                    this.Frame.Navigate(new ProfilePage());
+                    ChatPage chatPage = new ChatPage();
+                    chatPage.Show();
+                    this.Close();
                 }
             });
         }
