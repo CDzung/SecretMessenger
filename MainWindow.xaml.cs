@@ -63,7 +63,6 @@ namespace SecretMessage
                         await firebase.Child("users").PostAsync(newUser);
                     }
 
-
                     ChatPage chatPage = new ChatPage();
                     chatPage.Show();
                     this.Close();

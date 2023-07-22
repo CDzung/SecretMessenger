@@ -51,6 +51,7 @@ namespace SecretMessage
         {
             FirebaseUI.Instance.Client.AuthStateChanged -= this.AuthStateChanged;
             FirebaseUI.Instance.Client.SignOut();
+            
         }
     }
 }
