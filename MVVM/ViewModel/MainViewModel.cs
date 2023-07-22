@@ -1,5 +1,6 @@
 ﻿using Firebase.Database;
 using SecretMessage.Entity;
+using SecretMessage.Core;
 using SecretMessage.MVVM.Model;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,30 @@ using System.Windows.Data;
 
 namespace SecretMessage.MVVM.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : ObservableObject
     {
         private object _syncLock = new Object();
         public ObservableCollection<MessageModel> Messages { get; set; }
         public ObservableCollection<ContactModel> Contacts { get; set; }
+        /* Commands */
+        public RelayCommand SendCommand { get; set; }
+        private ContactModel _selectedContact;
+        public ContactModel SelectedContact 
+        {
+            get { return _selectedContact; }
+            set { _selectedContact = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _message;
+        public string Message
+        {
+            get { return _message; }
+            set { _message = value;
+                OnPropertyChanged();
+            }
+
+        }
         public ICollectionView ContactCollection { get; set; }
         public ICollectionView MessageCollection { get; set; }
         public MainViewModel()
@@ -71,6 +91,15 @@ namespace SecretMessage.MVVM.ViewModel
                 }
             });
 
+            SendCommand = new RelayCommand(o => 
+            {
+                Messages.Add(new MessageModel
+                {
+                    Message=Message,
+                    FirstMessage=false
+                });
+                Message = "";
+            });
             Messages.Add(new MessageModel
             {
                 Username = "Khai",
