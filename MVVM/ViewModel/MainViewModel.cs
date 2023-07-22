@@ -75,7 +75,7 @@ namespace SecretMessage.MVVM.ViewModel
                                 UID = user.Uid,
                                 Username = user.DisplayName,
                                 ImageSource = user.PhotoUrl,
-                                Messages = new ObservableCollection<MessageModel>()
+                                Messages = Messages
                             });
                         }
                         else
@@ -83,7 +83,7 @@ namespace SecretMessage.MVVM.ViewModel
                             contact.Username = user.DisplayName;
                             contact.ImageSource = user.PhotoUrl;
                             contact.UID = user.Uid;
-                            contact.Messages = new ObservableCollection<MessageModel>();
+                            contact.Messages = Messages;
 
                         }
                     }
@@ -102,43 +102,16 @@ namespace SecretMessage.MVVM.ViewModel
             {
                 Messages.Add(new MessageModel
                 {
-                    Message=Message,
+                    Username="HaHa",
+                    UsernameColor= "#FFA07A",
+                    Message =Message,
+                    Time = DateTime.Now,
+                    ImageSource = currentUser.Info.PhotoUrl,
                     FirstMessage=false
                 });
                 Message = "";
             });
-            Messages.Add(new MessageModel
-            {
-                Username = "Khai",
-                UsernameColor = "#409aff",
-                ImageSource = "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev\u003d2540745",
-                Message = "Test",
-                Time = DateTime.Now,
-                IsNativeOrigin = false,
-                FirstMessage = true
-            });
-
-            Messages.Add(new MessageModel
-            {
-                Username = "Huu",
-                UsernameColor = "#409aff",
-                ImageSource = "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev\u003d2540745",
-                Message = "Test",
-                Time = DateTime.Now,
-                IsNativeOrigin = false,
-                FirstMessage = true
-            });
-
-            Messages.Add(new MessageModel
-            {
-                Username = "Dung",
-                UsernameColor = "#409aff",
-                ImageSource = "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev\u003d2540745",
-                Message = "Test",
-                Time = DateTime.Now,
-                IsNativeOrigin = false,
-                FirstMessage = false
-            });
+            
         }
     }
 }
