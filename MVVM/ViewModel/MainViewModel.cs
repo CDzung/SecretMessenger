@@ -133,12 +133,12 @@ namespace SecretMessage.MVVM.ViewModel
                         .AsObservable<MessageEntity>()
                         .Subscribe(m =>
                         {
+                            var message = m.Object;
+
+                            var contact = Contacts.FirstOrDefault(c => c.UID == message.SenderUID && message.ReceiverUID == currentUser.Uid);
+                            
                             if (m.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
                             {
-                                var message = m.Object;
-
-                                var contact = Contacts.FirstOrDefault(c => c.UID == message.SenderUID && message.ReceiverUID == currentUser.Uid);
-
                                 if(contact != null)
                                 {
                                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
@@ -180,19 +180,34 @@ namespace SecretMessage.MVVM.ViewModel
 
                                 
                             }
+                            else if(m.EventType == Firebase.Database.Streaming.FirebaseEventType.Delete)
+                            {
+                                if (contact == null)
+                                {
+                                    contact = Contacts.FirstOrDefault(c => c.UID == message.ReceiverUID && message.SenderUID == currentUser.Uid);
+                                }
+                                var messageModel = contact.Messages.FirstOrDefault(mM => mM.SenderUID == message.SenderUID && mM.ReceiverUID == message.ReceiverUID);
+                                if (messageModel != null)
+                                {
+                                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                                    {
+                                        contact.RemoveMessage(messageModel);
+                                    }));
+                                }
+                            }
                         });
 
             SendCommand = new RelayCommand(o => 
             {
-                Messages.Add(new MessageModel
-                {
-                    Username="HaHa",
-                    UsernameColor= "#FFA07A",
-                    Message =Message,
-                    Time = DateTime.Now,
-                    ImageSource = currentUser.Info.PhotoUrl,
-                    FirstMessage=false
-                });
+                var msg = firebase
+                        .Child("messages")
+                        .PostAsync(new MessageEntity
+                        {
+                            SenderUID = currentUser.Uid,
+                            ReceiverUID = SelectedContact.UID,
+                            Message = Message,
+                            Time = DateTime.Now
+                        });
                 Message = "";
             });
             
