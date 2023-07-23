@@ -1,3 +1,3 @@
 # SecretMessage
 
-## An app chat by WPF and Firebase
+## An real-time app chat by WPF and Firebase
