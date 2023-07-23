@@ -32,7 +32,17 @@ namespace SecretMessage
 
             FirebaseUI.Instance.Client.AuthStateChanged += AuthStateChanged;
         }
+        public MainWindow(string type)
+        {
+            InitializeComponent();
+            if (String.IsNullOrEmpty(type))
+            FirebaseUI.Instance.Client.AuthStateChanged += AuthStateChanged;
+            else
+            {
+                this.Frame.Navigate(new ProfilePage());
+            }
 
+        }
         private void AuthStateChanged(object sender, UserEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(async () =>
@@ -62,7 +72,6 @@ namespace SecretMessage
 
                         await firebase.Child("users").PostAsync(newUser);
                     }
-
 
                     ChatPage chatPage = new ChatPage();
                     chatPage.Show();

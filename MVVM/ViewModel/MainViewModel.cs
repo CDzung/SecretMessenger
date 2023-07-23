@@ -184,15 +184,15 @@ namespace SecretMessage.MVVM.ViewModel
 
             SendCommand = new RelayCommand(o => 
             {
-                var msg = firebase
-                        .Child("messages")
-                        .PostAsync(new MessageEntity
-                        {
-                            SenderUID = currentUser.Uid,
-                            ReceiverUID = SelectedContact.UID,
-                            Message = Message,
-                            Time = DateTime.Now
-                        });
+                Messages.Add(new MessageModel
+                {
+                    Username="HaHa",
+                    UsernameColor= "#FFA07A",
+                    Message =Message,
+                    Time = DateTime.Now,
+                    ImageSource = currentUser.Info.PhotoUrl,
+                    FirstMessage=false
+                });
                 Message = "";
             });
             

@@ -39,6 +39,11 @@
             Content="Sign out"
             Padding="18 3"
             />
+            <Button 
+                
+            Content="Chat"
+            Padding="18 3" Click="Button_Click"
+            />
         </StackPanel>
     </Grid>
 </Page>

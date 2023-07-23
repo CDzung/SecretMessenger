@@ -13,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SecretMessage
@@ -36,20 +37,20 @@ namespace SecretMessage
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
 
         private void btnMaximize_Click(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
-                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            if (WindowState != WindowState.Maximized)
+                WindowState = WindowState.Maximized;
             else
-                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                WindowState = WindowState.Normal;
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -58,6 +59,14 @@ namespace SecretMessage
             {
                 DragMove();
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow("type");
+            main.Show();
+            this.Close();
+
         }
 
         private void ListView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
