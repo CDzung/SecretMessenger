@@ -32,10 +32,12 @@ namespace SecretMessage
         private void AuthStateChanged(object sender, UserEventArgs e)
         {
             var user = e.User;
-
+            if(user == null)
+            {
+                return;
+            }
             Application.Current.Dispatcher.Invoke(() =>
             {
-                this.UidTextBlock.Text = user.Uid;
                 this.NameTextBlock.Text = user.Info.DisplayName;
                 this.EmailTextBlock.Text = user.Info.Email;
                 this.ProviderTextBlock.Text = user.Credential.ProviderType.ToString();
@@ -51,13 +53,17 @@ namespace SecretMessage
         {
             FirebaseUI.Instance.Client.AuthStateChanged -= this.AuthStateChanged;
             FirebaseUI.Instance.Client.SignOut();
-            
+
+            new MainWindow().Show();
+            Window.GetWindow(this).Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            main.Show();
+            if (!ChatPage.GetInstance().IsVisible)
+            {
+                ChatPage.GetInstance().Show();
+            }
             Window.GetWindow(this).Close();
         }
     }

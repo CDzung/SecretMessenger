@@ -23,9 +23,6 @@
             />
 
             <TextBlock 
-            x:Name="UidTextBlock"
-            />
-            <TextBlock 
             x:Name="NameTextBlock"
             />
             <TextBlock 

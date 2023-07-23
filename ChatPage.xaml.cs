@@ -23,10 +23,12 @@ namespace SecretMessage
     /// </summary>
     public partial class ChatPage : Window
     {
+        private static ChatPage instance;
 
         public ChatPage()
         {
             InitializeComponent();
+            instance = this;
             var currentUser = FirebaseUI.Instance.Client.User;
             lbUsername.Content = currentUser.Info.DisplayName;
             avatar.ImageSource = new BitmapImage(new Uri(currentUser.Info.PhotoUrl));
@@ -35,8 +37,14 @@ namespace SecretMessage
             lbUsernameFriend.Content = selectedContact.Username;
         }
 
+        public static ChatPage GetInstance()
+        {
+            return instance ?? (instance = new ChatPage());
+        }
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            instance = null;
             this.Close();
         }
 
@@ -65,6 +73,7 @@ namespace SecretMessage
         {
             MainWindow main = new MainWindow("type");
             main.Show();
+            instance = null;
             this.Close();
 
         }

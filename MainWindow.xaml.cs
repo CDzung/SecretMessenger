@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SecretMessage
 {
@@ -36,7 +37,7 @@ namespace SecretMessage
         {
             InitializeComponent();
             if (String.IsNullOrEmpty(type))
-            FirebaseUI.Instance.Client.AuthStateChanged += AuthStateChanged;
+                FirebaseUI.Instance.Client.AuthStateChanged += AuthStateChanged;
             else
             {
                 this.Frame.Navigate(new ProfilePage());
@@ -51,7 +52,7 @@ namespace SecretMessage
                 {
                     this.Frame.Navigate(new LoginPage());
                 }
-                else if ((this.Frame.Content == null || this.Frame.Content.GetType() != typeof(ChatPage)))
+                else
                 {
                     var firebase = new FirebaseClient("https://secret-message-6a1d7-default-rtdb.firebaseio.com/");
                     var users = await firebase
@@ -72,9 +73,10 @@ namespace SecretMessage
 
                         await firebase.Child("users").PostAsync(newUser);
                     }
-
-                    ChatPage chatPage = new ChatPage();
-                    chatPage.Show();
+                    if(!ChatPage.GetInstance().IsVisible)
+                    {
+                        ChatPage.GetInstance().Show();
+                    }
                     this.Close();
                 }
             });

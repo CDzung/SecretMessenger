@@ -88,7 +88,7 @@
                       ItemContainerStyle="{StaticResource ContactCard}" SelectionChanged="ListView_SelectionChanged"
                       >
             </ListView>
-            <Button Margin="0,0,0,10" Grid.Row="2" Click="Button_Click">
+            <Button Margin="0,10,0,0" Grid.Row="2" Click="Button_Click" Background="#292B2F" BorderThickness="0">
                 <StackPanel
                         Orientation="Horizontal"
                         Background="#292B2F">
