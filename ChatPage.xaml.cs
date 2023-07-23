@@ -1,5 +1,6 @@
 ﻿using Firebase.Auth;
 using Firebase.Auth.UI;
+using SecretMessage.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,9 @@ namespace SecretMessage
             var currentUser = FirebaseUI.Instance.Client.User;
             lbUsername.Content = currentUser.Info.DisplayName;
             avatar.ImageSource = new BitmapImage(new Uri(currentUser.Info.PhotoUrl));
+            lvContacts.SelectedItem = lvContacts.Items[0];
+            var selectedContact = (ContactModel)lvContacts.SelectedItem;
+            lbUsernameFriend.Content = selectedContact.Username;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -63,6 +67,41 @@ namespace SecretMessage
             main.Show();
             this.Close();
 
+        }
+
+        private void ListView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (lvMessages.Items.Count > 0)
+            {
+                var border = (Border)VisualTreeHelper.GetChild(lvMessages, 0);
+                var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+                scrollViewer.ScrollToBottom();
+            }
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedContact = (ContactModel)lvContacts.SelectedItem;
+            lbUsernameFriend.Content = selectedContact.Username;
+            if (lvMessages.Items.Count > 0)
+            {
+                var border = (Border)VisualTreeHelper.GetChild(lvMessages, 0);
+                var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+                scrollViewer.ScrollToBottom();
+            }
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (lvMessages.Items.Count > 0)
+                {
+                    var border = (Border)VisualTreeHelper.GetChild(lvMessages, 0);
+                    var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+                    scrollViewer.ScrollToBottom();
+                }
+            }
         }
     }
 }
