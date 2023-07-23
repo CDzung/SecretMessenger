@@ -58,6 +58,13 @@ namespace SecretMessage.MVVM.Model
             }
         }
 
+        public void AddMessage(MessageModel message)
+        {
+            Messages.Add(message);
+            LastMessage = message.Message;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Messages)));
+        }
+
         public string LastMessage
         {
             get => lastMessage;

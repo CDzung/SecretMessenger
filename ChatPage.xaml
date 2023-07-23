@@ -77,12 +77,14 @@
                    Foreground="Gray"
                    Margin="8,0,0,0"/>
 
-            <ListView ItemsSource="{Binding Contacts}"
+            <ListView 
+                      x:Name="lvContacts" 
+                      ItemsSource="{Binding Contacts}"
                       SelectedItem="{Binding SelectedContact}"
                       Background="Transparent"
                       BorderThickness="0"
                       Grid.Row="1"
-                      ItemContainerStyle="{StaticResource ContactCard}"
+                      ItemContainerStyle="{StaticResource ContactCard}" SelectionChanged="ListView_SelectionChanged"
                       >
             </ListView>
 
@@ -115,7 +117,7 @@
             <Border BorderBrush="#2F3136"
                     BorderThickness="0,0,0,2">
                 <Grid HorizontalAlignment="Stretch" Margin="8">
-                    <Label Content="@Username"
+                    <Label x:Name="lbUsernameFriend"
                            Foreground="White"
                            FontWeight="Bold"
                            Margin="5,0,5,0"
@@ -129,10 +131,12 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <ListView ItemsSource="{Binding SelectedContact.Messages}"
+            <local:AutoScrollingListView
+                      x:Name="lvMessages"
                       Background="Transparent"
                       BorderThickness="0"
                       ItemContainerStyle="{StaticResource ChatItem}"
+                      ItemsSource="{Binding SelectedContact.Messages}"
                       Margin="8,0,0,0"
                       Grid.Row="1"/>
             
@@ -144,6 +148,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Row="1"
                          Height="50"
+                         KeyDown="TextBox_KeyDown"
                          Text="Message @Username"
                          Style="{StaticResource MessageBox}"
                          Grid.ColumnSpan="2"/>
@@ -151,7 +156,7 @@
                             HorizontalAlignment="Right"
                             Grid.Column="1"
                             Margin="0,0,16,0">
-                    <Image Source=""/>
+                    <Image />
 
                 </StackPanel>
             </Grid>
