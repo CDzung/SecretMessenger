@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Firebase.Auth;
+using Firebase.Auth.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +25,6 @@ namespace SecretMessage
         public LoginPage()
         {
             InitializeComponent();
-            
         }
     }
 }
