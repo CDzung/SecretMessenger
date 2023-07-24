@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -91,7 +92,13 @@ namespace SecretMessage
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedContact = (ContactModel)lvContacts.SelectedItem;
+            if (selectedContact == null)
+            {
+                lvContacts.SelectedItem = lvContacts.Items[0];
+                selectedContact = (ContactModel)lvContacts.SelectedItem;
+            }
             lbUsernameFriend.Content = selectedContact.Username;
+
             if (lvMessages.Items.Count > 0)
             {
                 var border = (Border)VisualTreeHelper.GetChild(lvMessages, 0);

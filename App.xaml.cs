@@ -32,7 +32,7 @@ namespace SecretMessage
                 AuthDomain = "secret-message-6a1d7.firebaseapp.com",
                 Providers = new FirebaseAuthProvider[]
                 {
-                    new GoogleProvider(),
+                    new GoogleProvider().AddScopes("email"),
                     new FacebookProvider(),
                     new GithubProvider()
                 },
@@ -43,15 +43,5 @@ namespace SecretMessage
                 AnonymousUpgradeConflict = conflict => conflict.SignInWithPendingCredentialAsync(true)
             });
         }
-
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    var serviceCollection = new ServiceCollection();
-        //    serviceCollection.AddTransient<MainWindow>();
-        //    serviceCollection.AddScoped<FirebaseClient>();
-        //    ServiceProvider = serviceCollection.BuildServiceProvider();
-        //    ServiceProvider.GetRequiredService<MainWindow>().Show();
-
-        //}
     }
 }

@@ -19,7 +19,7 @@ namespace SecretMessage
             base.OnItemsSourceChanged(oldValue, newValue);
 
             if (oldValue as INotifyCollectionChanged != null)
-                (oldValue as INotifyCollectionChanged).CollectionChanged -= ItemsCollectionChanged;
+                ((oldValue as INotifyCollectionChanged)!).CollectionChanged -= ItemsCollectionChanged;
 
             if (newValue as INotifyCollectionChanged == null) return;
 
@@ -36,8 +36,6 @@ namespace SecretMessage
 
         void ItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (_scrollViewer == null) return;
-
             if (!_scrollViewer.VerticalOffset.Equals(_scrollViewer.ScrollableHeight)) return;
 
             UpdateLayout();
@@ -47,7 +45,6 @@ namespace SecretMessage
         private static DependencyObject RecursiveVisualChildFinder<T>(DependencyObject rootObject)
         {
             var child = VisualTreeHelper.GetChild(rootObject, 0);
-            if (child == null) return null;
 
             return child.GetType() == typeof(T) ? child : RecursiveVisualChildFinder<T>(child);
         }

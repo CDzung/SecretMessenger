@@ -122,10 +122,6 @@ namespace SecretMessage.MVVM.ViewModel
                         Messages = new ObservableCollection<MessageModel>()
                     });
                 }
-                else
-                {
-                    currentUserEntity = user.Object;
-                }
             }
 
             var messages = firebase
@@ -141,6 +137,7 @@ namespace SecretMessage.MVVM.ViewModel
                             {
                                 if(contact != null)
                                 {
+                                    Contacts.Move(Contacts.IndexOf(contact), 0);
                                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                                     {
                                         contact.AddMessage(new MessageModel
@@ -160,6 +157,7 @@ namespace SecretMessage.MVVM.ViewModel
                                     contact = Contacts.FirstOrDefault(c => c.UID == message.ReceiverUID && message.SenderUID == currentUser.Uid);
                                     if (contact != null)
                                     {
+                                        Contacts.Move(Contacts.IndexOf(contact), 0);
                                         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => 
                                         {
                                             contact.AddMessage(new MessageModel
@@ -175,10 +173,6 @@ namespace SecretMessage.MVVM.ViewModel
                                         }));
                                     }
                                 }
-
-                               
-
-                                
                             }
                             else if(m.EventType == Firebase.Database.Streaming.FirebaseEventType.Delete)
                             {

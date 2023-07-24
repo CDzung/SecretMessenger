@@ -62,6 +62,10 @@ namespace SecretMessage.MVVM.Model
         {
             Messages.Add(message);
             LastMessage = message.Message;
+            if (LastMessage.Length > 20)
+            {
+                LastMessage = LastMessage.Substring(0, 20) + "...";
+            }
             if(message.UsernameColor.Equals("#FFA07A"))
             {
                 LastMessage = "Bạn: " + LastMessage;
@@ -73,6 +77,7 @@ namespace SecretMessage.MVVM.Model
         {
             Messages.Remove(message);
             LastMessage = Messages.Last<MessageModel>().Message;
+            
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Messages)));
         }
 
